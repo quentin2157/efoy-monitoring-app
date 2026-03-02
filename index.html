@@ -261,9 +261,73 @@
     const SUPABASE_URL = "https://upyglxubsynbsukrfqca.supabase.co"; 
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVweWdseHVic3luYnN1a3JmcWNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0NjkyNzQsImV4cCI6MjA4ODA0NTI3NH0.EaZrLBr7v-LW2vsO3SIUeE49Z076_HR7vmEI_Si87Uc";
 
-    let devices = JSON.parse(localStorage.getItem('storage_efoy_edfps')) || ["430511-2348-72332", "430509-2248-64759"];
+let devices = [];
     let currentView = 'grid'; 
     let expertChart = null; 
+
+    // --- (Gardez vos fonctions utilitaires toH, prec, getVolume, call, fetchHistoryFromSupabase, switchView, filterDevices, refreshFleet, openExpert, renderHistoryChart, row, closeDrawer telles quelles) ---
+
+    // NOUVEAU : 1. Charger la liste des EFOY au démarrage
+    async function loadDevices() {
+        if (SUPABASE_URL === "VOTRE_SUPABASE_URL_ICI") {
+            alert("N'oubliez pas de mettre vos clés Supabase dans le code !");
+            return;
+        }
+        try {
+            const r = await fetch(`${SUPABASE_URL}/rest/v1/efoy_devices`, {
+                headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+            });
+            if (r.ok) {
+                const data = await r.json();
+                devices = data.map(d => d.serial_number);
+            }
+        } catch (e) { console.error("Erreur de chargement des appareils", e); }
+        
+        // S'il n'y a rien dans la base, on met ceux par défaut
+        if (devices.length === 0) devices = ["430511-2348-72332", "430509-2248-64759"];
+        
+        refreshFleet();
+    }
+
+    // NOUVEAU : 2. Ajouter un appareil dans Supabase
+    async function addDevice() { 
+        const input = document.getElementById('sn-input'); 
+        const v = input.value.trim(); 
+        if (!v) return; 
+        if (devices.includes(v)) { alert("Déjà suivi."); return; } 
+        
+        devices.push(v); 
+        
+        // Sauvegarde dans Supabase
+        await fetch(`${SUPABASE_URL}/rest/v1/efoy_devices`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+            body: JSON.stringify({ serial_number: v })
+        });
+
+        refreshFleet(); 
+        input.value = ""; 
+    }
+
+    // NOUVEAU : 3. Supprimer un appareil de Supabase
+    async function removeDevice(sn) { 
+        if (confirm(`Supprimer ${sn} ?`)) { 
+            devices = devices.filter(d => d !== sn); 
+            
+            // Suppression dans Supabase
+            await fetch(`${SUPABASE_URL}/rest/v1/efoy_devices?serial_number=eq.${sn}`, {
+                method: 'DELETE',
+                headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+            });
+
+            refreshFleet(); 
+        } 
+    }
+
+    // Démarrage : on appelle loadDevices au lieu de refreshFleet directement
+    loadDevices(); 
+    setInterval(refreshFleet, 20000); 
+</script> 
 
     // Utilitaires
     const toH = (sec) => (sec !== null && sec !== undefined) ? (sec / 3600).toFixed(1) + " H" : "0.0 H";
@@ -288,7 +352,7 @@
 
     // Appel API Historique Supabase
     async function fetchHistoryFromSupabase(sn) {
-        if (SUPABASE_URL === "VOTRE_SUPABASE_URL_ICI") return []; 
+        if (SUPABASE_URL === "https://upyglxubsynbsukrfqca.supabase.co") return []; 
         try {
             const r = await fetch(`${SUPABASE_URL}/rest/v1/efoy_history?serial_number=eq.${sn}&order=created_at.desc&limit=288`, {
                 headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
