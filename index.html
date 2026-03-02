@@ -270,7 +270,7 @@
 
     // Appel API Historique Supabase
     async function fetchHistoryFromSupabase(sn) {
-        if (SUPABASE_URL === "https://upyglxubsynbsukrfqca.supabase.co") return []; 
+        if (SUPABASE_URL === "VOTRE_SUPABASE_URL_ICI") return []; 
         try {
             const r = await fetch(`${SUPABASE_URL}/rest/v1/efoy_history?serial_number=eq.${sn}&order=created_at.desc&limit=288`, {
                 headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
@@ -285,7 +285,7 @@
 
     // 1. Charger la liste des EFOY au démarrage depuis Supabase
     async function loadDevices() {
-        if (SUPABASE_URL === "https://upyglxubsynbsukrfqca.supabase.co") {
+        if (SUPABASE_URL === "VOTRE_SUPABASE_URL_ICI") {
             alert("N'oubliez pas de mettre vos clés Supabase dans le code index.html !");
             return;
         }
@@ -298,6 +298,9 @@
                 devices = data.map(d => d.serial_number);
             }
         } catch (e) { console.error("Erreur de chargement des appareils", e); }
+        
+        // Sécurité : s'il n'y a rien dans la base, on met ceux par défaut
+        if (devices.length === 0) devices = ["430511-2348-72332", "430509-2248-64759"];
         
         refreshFleet();
     }
