@@ -1,0 +1,24 @@
+name: EFOY Data Sync
+
+on:
+  schedule:
+- cron: '* * * * *' # Lance le script toutes les minutes
+workflow_dispatch:
+
+jobs:
+  run-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Télécharger le code
+        uses: actions/checkout@v4
+
+      - name: Préparer l'environnement
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer les outils
+        run: npm install
+
+      - name: Lancer le robot
+        run: node sync.js
