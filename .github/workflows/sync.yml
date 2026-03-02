@@ -1,24 +1,19 @@
 name: EFOY Data Sync
-
 on:
   schedule:
-    - cron: '* * * * *'
+    - cron: "*/5 * * * *"
   workflow_dispatch:
-
 jobs:
   run-sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Télécharger le code
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Préparer l'environnement
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-
-      - name: Installer les outils
+          node-version: 20
+      - name: Install tools
         run: npm install
-
-      - name: Lancer le robot
+      - name: Run robot
         run: node sync.js
