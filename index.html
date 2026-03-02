@@ -10,55 +10,43 @@
     
     <style>
         :root {
-            /* Palette EDF Modernisée */
-            --primary: #001A70;
-            --primary-light: #2443a8;
-            --accent: #FE5800;
-            --success: #00C072;
-            --danger: #FF3B30;
-            --bg: #F5F7FA;
-            --surface: #FFFFFF;
-            --text-main: #1D1D1F;
-            --text-muted: #86868B;
-            --border: #E5E5EA;
-            
-            /* Effets */
-            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.04);
-            --shadow-hover: 0 10px 30px rgba(0, 26, 112, 0.1);
-            --radius: 16px;
+            var(--primary): #001A70; --primary-light: #2443a8; --accent: #FE5800;
+            --success: #00C072; --danger: #FF3B30; --bg: #F5F7FA;
+            --surface: #FFFFFF; --text-main: #1D1D1F; --text-muted: #86868B;
+            --border: #E5E5EA; --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 10px 30px rgba(0, 26, 112, 0.1); --radius: 16px;
             --trans: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
-        
         body { background-color: var(--bg); color: var(--text-main); font-family: 'Inter', sans-serif; margin: 0; height: 100vh; display: flex; overflow: hidden; }
 
-        /* --- SIDEBAR --- */
-        .sidebar { width: 80px; background: var(--primary); display: flex; flex-direction: column; align-items: center; padding: 30px 0; z-index: 100; box-shadow: 4px 0 20px rgba(0,0,0,0.1); transition: var(--trans); }
-        .logo-area { width: 45px; height: 45px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: var(--primary); font-size: 12px; margin-bottom: 40px; }
+        /* SIDEBAR */
+        .sidebar { width: 80px; background: #001A70; display: flex; flex-direction: column; align-items: center; padding: 30px 0; z-index: 100; box-shadow: 4px 0 20px rgba(0,0,0,0.1); transition: var(--trans); }
+        .logo-area { width: 45px; height: 45px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #001A70; font-size: 12px; margin-bottom: 40px; }
         .nav-icon { width: 45px; height: 45px; border-radius: 12px; color: rgba(255,255,255,0.6); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 15px; cursor: pointer; transition: var(--trans); }
         .nav-icon.active { background: rgba(255,255,255,0.15); color: white; }
         .nav-icon:hover { color: white; transform: scale(1.1); }
 
-        /* --- MAIN CONTENT --- */
+        /* MAIN CONTENT */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
 
         header { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); z-index: 10; }
-        .title h1 { margin: 0; font-size: 24px; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
+        .title h1 { margin: 0; font-size: 24px; font-weight: 800; color: #001A70; letter-spacing: -0.5px; }
         .title p { margin: 5px 0 0; color: var(--text-muted); font-size: 13px; font-weight: 500; }
         
         .action-group { display: flex; gap: 15px; align-items: center; }
         .view-toggle { display: flex; background: #E5E5EA; border-radius: 8px; padding: 3px; margin-right: 15px; }
         .vt-btn { border: none; background: transparent; padding: 6px 12px; border-radius: 6px; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: var(--trans); }
-        .vt-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .vt-btn.active { background: white; color: #001A70; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
         .search-box { background: white; border: 1px solid var(--border); padding: 0 15px; height: 40px; border-radius: 50px; display: flex; align-items: center; width: 220px; transition: var(--trans); }
-        .search-box:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,26,112,0.1); }
+        .search-box:focus-within { border-color: #001A70; box-shadow: 0 0 0 3px rgba(0,26,112,0.1); }
         .search-box input { border: none; flex: 1; height: 100%; font-size: 13px; color: var(--text-main); background:transparent; }
         
         .divider-v { width: 1px; height: 30px; background: var(--border); margin: 0 5px; }
 
-        .btn-primary { background: var(--accent); color: white; border: none; height: 40px; padding: 0 20px; border-radius: 50px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: var(--trans); font-size: 13px; }
+        .btn-primary { background: #FE5800; color: white; border: none; height: 40px; padding: 0 20px; border-radius: 50px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: var(--trans); font-size: 13px; }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(254, 88, 0, 0.3); }
 
         .dashboard-scroll { padding: 40px; overflow-y: auto; flex: 1; }
@@ -76,19 +64,17 @@
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: #FAFAFA; cursor: pointer; }
 
+        /* CARDS */
         .card { background: var(--surface); border-radius: var(--radius); padding: 25px; box-shadow: var(--shadow-card); border: 1px solid white; position: relative; cursor: pointer; transition: var(--trans); overflow: hidden; display: flex; flex-direction: column; }
         .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: rgba(0,26,112,0.1); }
-        
         .card-status-bar { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--border); }
         .card.online .card-status-bar { background: var(--success); }
         .card.offline .card-status-bar { background: var(--text-muted); }
         .card.error .card-status-bar { background: var(--danger); }
-
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-        .device-name { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+        .device-name { font-size: 18px; font-weight: 700; color: #001A70; margin-bottom: 4px; }
         .device-sn { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); background: #F0F2F5; padding: 4px 8px; border-radius: 6px; display: inline-block; }
-        
-        .status-badge { font-size: 11px; font-weight: 800; padding: 5px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+        .status-badge { font-size: 11px; font-weight: 800; padding: 5px 10px; border-radius: 20px; text-transform: uppercase; white-space: nowrap; }
         .status-badge.online { background: rgba(0, 192, 114, 0.1); color: var(--success); }
         .status-badge.offline { background: rgba(0, 0, 0, 0.05); color: var(--text-muted); }
         .status-badge.error { background: #FFF0F0; color: var(--danger); }
@@ -96,7 +82,6 @@
         .gauges-row { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #F0F2F5; align-items: flex-start; }
         .gauge-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .gauge-wrapper { display: flex; align-items: center; gap: 12px; width: 100%; justify-content: flex-start; margin-bottom: 5px; }
-        
         .circle-gauge { width: 55px; height: 55px; border-radius: 50%; background: conic-gradient(var(--fill) calc(var(--p) * 1%), #F0F2F5 0); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; }
         .circle-inner { width: 47px; height: 47px; background: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .circle-inner i { font-size: 14px; color: var(--text-muted); margin-bottom: -2px; }
@@ -110,7 +95,7 @@
         .detail-row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; background: #FAFAFA; padding: 4px 8px; border-radius: 6px; border: 1px solid #F0F2F5; }
         .detail-row.alert { border-color: #FED7D7; background: #FFF5F5; }
         .dr-left { display: flex; flex-direction: column; }
-        .dr-type { font-weight: 700; color: var(--primary); }
+        .dr-type { font-weight: 700; color: #001A70; }
         .dr-sub { font-size: 9px; color: var(--text-muted); font-family: 'JetBrains Mono'; }
         .dr-right { font-weight: 800; font-family: 'JetBrains Mono'; color: var(--text-main); }
         .dr-right.low { color: var(--danger); }
@@ -118,7 +103,7 @@
         .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .data-point { background: #F8F9FB; padding: 12px; border-radius: 10px; }
         .dp-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
-        .dp-value { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; color: var(--primary); }
+        .dp-value { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; color: #001A70; }
 
         .btn-delete { width: 30px; height: 30px; border-radius: 50%; border: none; background: #FFF0F0; color: var(--danger); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--trans); }
         .card .btn-delete { position: absolute; bottom: 25px; right: 25px; opacity: 0; }
@@ -132,14 +117,14 @@
         .circle-gauge.mini i { font-size: 12px; margin: 0; }
         .circle-gauge.mini span { display: none; }
 
-        /* --- DRAWER --- */
+        /* DRAWER */
         .drawer-overlay { position: fixed; inset: 0; background: rgba(0,26,112,0.2); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: var(--trans); z-index: 200; }
         .drawer { position: fixed; top: 0; right: 0; height: 100%; width: 500px; background: white; box-shadow: -10px 0 40px rgba(0,0,0,0.1); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 201; display: flex; flex-direction: column; }
         .drawer.active { transform: translateX(0); }
         .drawer-overlay.active { opacity: 1; pointer-events: auto; }
-        .drawer-header { background: var(--primary); padding: 30px; color: white; display: flex; justify-content: space-between; align-items: flex-start; }
+        .drawer-header { background: #001A70; padding: 30px; color: white; display: flex; justify-content: space-between; align-items: flex-start; }
         .drawer-content { padding: 30px; overflow-y: auto; flex: 1; }
-        .section-header { font-size: 12px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin: 30px 0 15px; display: flex; align-items: center; gap: 10px; }
+        .section-header { font-size: 12px; font-weight: 800; color: #FE5800; text-transform: uppercase; margin: 30px 0 15px; display: flex; align-items: center; gap: 10px; }
         .section-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
         .tech-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed var(--border); }
         .tech-label { color: var(--text-muted); font-size: 13px; font-weight: 500; }
@@ -147,23 +132,7 @@
         .cart-item { border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 10px; background: #FAFAFA; position: relative; overflow: hidden; }
         .cart-item.active-port { border: 1px solid var(--success); background: #F0FDF4; }
         .bar-bg { height: 6px; background: #E5E5EA; border-radius: 3px; margin-top: 10px; overflow: hidden; }
-        .bar-fill { height: 100%; border-radius: 3px; background: var(--primary); }
-
-        @media (max-width: 768px) {
-            body { flex-direction: column; overflow: auto; }
-            .sidebar { width: 100%; height: 60px; flex-direction: row; padding: 0 20px; justify-content: space-between; position: fixed; bottom: 0; border-top: 1px solid var(--border); box-shadow: 0 -4px 20px rgba(0,0,0,0.05); background: white; }
-            .logo-area { margin: 0; background: var(--primary); color: white; }
-            .nav-icon { color: var(--text-muted); margin: 0; }
-            .nav-icon.active { background: transparent; color: var(--primary); }
-            .main-content { padding-bottom: 70px; }
-            .dashboard-scroll { padding: 20px; }
-            header { flex-direction: column; gap: 15px; padding: 20px; align-items: stretch; }
-            .search-box { width: 100%; }
-            .drawer { width: 100%; }
-            .grid-container { grid-template-columns: 1fr; }
-            .table-container { overflow-x: scroll; }
-            .divider-v { display:none; }
-        }
+        .bar-fill { height: 100%; border-radius: 3px; background: #001A70; }
     </style>
 </head>
 <body>
@@ -203,6 +172,12 @@
     </header>
 
     <div class="dashboard-scroll">
+        <div id="empty-state" style="display:none; text-align:center; padding: 50px; color: var(--text-muted);">
+            <i class="ri-base-station-line" style="font-size: 48px; color: #E5E5EA;"></i>
+            <h3>Aucun appareil surveillé</h3>
+            <p>Ajoutez un numéro de série en haut à droite pour commencer.</p>
+        </div>
+
         <div class="grid-container" id="fleet-grid"></div>
 
         <div class="table-container hidden" id="fleet-table-container">
@@ -236,10 +211,8 @@
 </div>
 
 <script>
-    // --- CONFIGURATION ---
+    // === VOS CLÉS EN DUR ===
     const EFOY_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYTBiYmY3NC1lMWY0LTQwOWMtYThmNC0wMmE2Mjc0MmNjZDIiLCJpYXQiOjE3NzEyNDg2NTksImF1ZCI6WyJodHRwczovL2FwaS5wdWJsaWMuZWZveS1jbG91ZC5jb20vIl0sImV4cCI6MTc3NjI5MDQwMH0.p4V6ui-vcIPt9EZ0M-ds_BSUTDSkmFfIKPwV_U0T5HVm2dWWIrX9E23rFX0BApe9ea3XXY921Ub7WQwoDJ7DxQ";
-    
-    // --- À REMPLACER PAR VOS VRAIES CLÉS SUPABASE ---
     const SUPABASE_URL = "https://upyglxubsynbsukrfqca.supabase.co"; 
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVweWdseHVic3luYnN1a3JmcWNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0NjkyNzQsImV4cCI6MjA4ODA0NTI3NH0.EaZrLBr7v-LW2vsO3SIUeE49Z076_HR7vmEI_Si87Uc";
 
@@ -270,7 +243,6 @@
 
     // Appel API Historique Supabase
     async function fetchHistoryFromSupabase(sn) {
-        if (SUPABASE_URL === "VOTRE_SUPABASE_URL_ICI") return []; 
         try {
             const r = await fetch(`${SUPABASE_URL}/rest/v1/efoy_history?serial_number=eq.${sn}&order=created_at.desc&limit=288`, {
                 headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
@@ -283,12 +255,8 @@
         return [];
     }
 
-    // 1. Charger la liste des EFOY au démarrage depuis Supabase
+    // 1. Charger la liste depuis Supabase (sans tableau par défaut !)
     async function loadDevices() {
-        if (SUPABASE_URL === "VOTRE_SUPABASE_URL_ICI") {
-            alert("N'oubliez pas de mettre vos clés Supabase dans le code index.html !");
-            return;
-        }
         try {
             const r = await fetch(`${SUPABASE_URL}/rest/v1/efoy_devices`, {
                 headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
@@ -297,15 +265,12 @@
                 const data = await r.json();
                 devices = data.map(d => d.serial_number);
             }
-        } catch (e) { console.error("Erreur de chargement des appareils", e); }
-        
-        // Sécurité : s'il n'y a rien dans la base, on met ceux par défaut
-        if (devices.length === 0) devices = ["430511-2348-72332", "430509-2248-64759"];
+        } catch (e) { console.error("Erreur BDD:", e); }
         
         refreshFleet();
     }
 
-    // 2. Ajouter un appareil dans Supabase
+    // 2. Ajouter un appareil
     async function addDevice() { 
         const input = document.getElementById('sn-input'); 
         const v = input.value.trim(); 
@@ -313,27 +278,23 @@
         if (devices.includes(v)) { alert("Déjà suivi."); return; } 
         
         devices.push(v); 
-        
         await fetch(`${SUPABASE_URL}/rest/v1/efoy_devices`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
             body: JSON.stringify({ serial_number: v })
         });
-
         refreshFleet(); 
         input.value = ""; 
     }
 
-    // 3. Supprimer un appareil de Supabase
+    // 3. Supprimer un appareil
     async function removeDevice(sn) { 
         if (confirm(`Confirmer la suppression du device ${sn} ?`)) { 
             devices = devices.filter(d => d !== sn); 
-            
             await fetch(`${SUPABASE_URL}/rest/v1/efoy_devices?serial_number=eq.${sn}`, {
                 method: 'DELETE',
                 headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
             });
-
             refreshFleet(); 
         } 
     }
@@ -370,8 +331,21 @@
     async function refreshFleet() {
         const gridContainer = document.getElementById('fleet-grid');
         const tableBody = document.getElementById('fleet-table-body');
+        const emptyState = document.getElementById('empty-state');
+        
         document.getElementById('last-sync').innerHTML = '<i class="ri-refresh-line"></i> Synchro en cours...';
         
+        // Gestion de l'affichage si aucun EFOY
+        if (devices.length === 0) {
+            emptyState.style.display = 'block';
+            gridContainer.innerHTML = "";
+            tableBody.innerHTML = "";
+            document.getElementById('last-sync').innerHTML = `<i class="ri-check-double-line" style="color:var(--success)"></i> MàJ : ${new Date().toLocaleTimeString()}`;
+            return;
+        } else {
+            emptyState.style.display = 'none';
+        }
+
         let gridHtml = ""; let tableHtml = "";
 
         for (const sn of devices) {
@@ -393,14 +367,13 @@
             const efoyVolt = prec(d.latestTelemetry.voltageEfoy) + " V";
             const hours = toH(d.latestTelemetry.stackOperationTime);
             
-            let fuelColor = fuelPercent < 20 ? "var(--danger)" : fuelPercent < 50 ? "var(--accent)" : "var(--primary)";
+            let fuelColor = fuelPercent < 20 ? "var(--danger)" : fuelPercent < 50 ? "var(--accent)" : "#001A70";
 
-            // Détail fuel
             let fuelDetailHtml = '<div class="detail-list">';
             if (c && c.ports) {
                 c.ports.forEach(p => {
                     const volMax = getVolume(p.cartridgeType); const volCur = ((p.fuelLevel / 100) * volMax).toFixed(1);
-                    let pColor = p.fuelLevel < 20 ? "var(--danger)" : p.fuelLevel < 50 ? "var(--accent)" : "var(--primary)";
+                    let pColor = p.fuelLevel < 20 ? "var(--danger)" : p.fuelLevel < 50 ? "var(--accent)" : "#001A70";
                     fuelDetailHtml += `<div class="detail-row" style="display: flex; align-items: center; gap: 8px;"><div class="circle-gauge" style="width: 28px; height: 28px; --p:${p.fuelLevel}; --fill:${pColor};"><div class="circle-inner" style="width: 22px; height: 22px; font-size: 8px;"><span style="font-size: 7px;">${Math.round(p.fuelLevel)}%</span></div></div><div class="dr-left" style="flex: 1;"><span class="dr-type">Port ${p.portNumber} &bull; ${p.cartridgeType}</span><span class="dr-sub">${volCur}L / ${volMax}L</span></div></div>`;
                 });
             } else { fuelDetailHtml += `<div class="detail-row"><span class="dr-sub">Aucune cartouche</span></div>`; }
@@ -408,7 +381,7 @@
 
             const battType = (b && b.configuration.type) ? b.configuration.type : "N/A";
             const battCap = (b && b.configuration.capacity) ? b.configuration.capacity + " Ah" : "-";
-            const battDetailHtml = `<div class="detail-list"><div class="detail-row"><div class="dr-left"><span class="dr-type">Type</span></div><div class="dr-right" style="color:var(--primary)">${battType}</div></div><div class="detail-row"><div class="dr-left"><span class="dr-type">Capacité</span></div><div class="dr-right" style="color:var(--primary)">${battCap}</div></div></div>`;
+            const battDetailHtml = `<div class="detail-list"><div class="detail-row"><div class="dr-left"><span class="dr-type">Type</span></div><div class="dr-right" style="color:#001A70">${battType}</div></div><div class="detail-row"><div class="dr-left"><span class="dr-type">Capacité</span></div><div class="dr-right" style="color:#001A70">${battCap}</div></div></div>`;
 
             gridHtml += `
             <div class="card ${isOnline ? 'online' : 'offline'}" onclick="openExpert('${sn}')">
@@ -429,7 +402,7 @@
 
             tableHtml += `
             <tr onclick="openExpert('${sn}')">
-                <td><div style="font-weight:700; color:var(--primary)">${d.name}</div><div class="device-sn">${sn}</div></td>
+                <td><div style="font-weight:700; color:#001A70">${d.name}</div><div class="device-sn">${sn}</div></td>
                 <td><span class="status-badge ${isOnline ? 'online' : 'offline'}">${stateText}</span><div class="td-subtext">${d.userMode}</div></td>
                 <td><div class="td-flex-gauge"><div class="circle-gauge mini" style="--p:${fuelPercent}; --fill:${fuelColor}"><div class="circle-inner"><i class="ri-drop-fill" style="color:${fuelColor}"></i></div></div><span style="font-weight:600; font-family:'JetBrains Mono'">${fuelPercent}%</span></div></td>
                 <td><div class="td-flex-gauge"><div class="circle-gauge mini" style="--p:${battSOC}; --fill:var(--success)"><div class="circle-inner"><i class="ri-flashlight-fill" style="color:var(--success)"></i></div></div><div><div style="font-weight:600; font-family:'JetBrains Mono'">${voltage} V</div><div class="td-subtext">${battSOC} %</div></div></div></td>
@@ -474,8 +447,6 @@
             h += row("Tension Actuelle", prec(dev.latestTelemetry.voltageBattery) + " V");
             h += row("SOC (État de Charge)", `<span style="color:var(--success)">${prec(batt.latestTelemetry.stateOfCharge)} %</span>`);
             h += row("Capacité Configurée", (batt.configuration.capacity || "-") + " Ah");
-            h += row("Seuil Démarrage", prec(batt.configuration.beginOfChargeVoltage) + " V");
-            h += row("Seuil Arrêt", prec(batt.configuration.endOfChargeVoltage) + " V");
         }
 
         if (cart) {
@@ -484,11 +455,11 @@
             const totalLitersFixed = totalLiters.toFixed(2); const totalPercent = prec(cart.totalFuelPercent);
 
             h += `<div class="section-header"><i class="ri-drop-line"></i> Bidons </div>`;
-            h += `<div class="total-fuel-container" style="margin: 0 15px 25px 15px;"><div style="display:flex; justify-content:space-between; align-items: flex-end; margin-bottom:8px;"><span style="font-size:14px; font-weight:700; color:var(--primary);">Volume Total</span><div style="text-align: right; line-height: 1.2;"><div style="font-size:16px; font-weight:800; color:var(--primary);">${totalPercent}%</div><div style="font-size:10px; color:var(--text-muted); font-weight:400;">(${totalLitersFixed} L / ${totalMaxVol} L)</div></div></div><div class="bar-bg" style="height: 12px; background: rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden;"><div class="bar-fill" style="width:${totalPercent}%; height:100%; background: var(--primary); transition: width 0.8s ease;"></div></div></div>`;
+            h += `<div class="total-fuel-container" style="margin: 0 15px 25px 15px;"><div style="display:flex; justify-content:space-between; align-items: flex-end; margin-bottom:8px;"><span style="font-size:14px; font-weight:700; color:#001A70;">Volume Total</span><div style="text-align: right; line-height: 1.2;"><div style="font-size:16px; font-weight:800; color:#001A70;">${totalPercent}%</div><div style="font-size:10px; color:var(--text-muted); font-weight:400;">(${totalLitersFixed} L / ${totalMaxVol} L)</div></div></div><div class="bar-bg" style="height: 12px; background: rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden;"><div class="bar-fill" style="width:${totalPercent}%; height:100%; background: #001A70; transition: width 0.8s ease;"></div></div></div>`;
 
             cart.ports.forEach(p => {
                 const vol = getVolume(p.cartridgeType); const liters = ((p.fuelLevel / 100) * vol).toFixed(2);
-                h += `<div class="cart-item ${p.portActive ? 'active-port' : ''}"><div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; color:var(--primary);"><span>PORT ${p.portNumber} &bull; ${p.cartridgeType}</span><span>${prec(p.fuelLevel)}%</span></div><div class="bar-bg"><div class="bar-fill" style="width:${p.fuelLevel}%"></div></div><div style="display:flex; justify-content:space-between; margin-top:8px; font-size:11px; color:var(--text-muted);"><span>${liters} L / ${vol} L</span>${p.portActive ? '<span style="color:var(--success); font-weight:800"><i class="ri-checkbox-circle-line"></i> ACTIF</span>' : '<span>Standby</span>'}</div></div>`;
+                h += `<div class="cart-item ${p.portActive ? 'active-port' : ''}"><div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; color:#001A70;"><span>PORT ${p.portNumber} &bull; ${p.cartridgeType}</span><span>${prec(p.fuelLevel)}%</span></div><div class="bar-bg"><div class="bar-fill" style="width:${p.fuelLevel}%"></div></div><div style="display:flex; justify-content:space-between; margin-top:8px; font-size:11px; color:var(--text-muted);"><span>${liters} L / ${vol} L</span>${p.portActive ? '<span style="color:var(--success); font-weight:800"><i class="ri-checkbox-circle-line"></i> ACTIF</span>' : '<span>Standby</span>'}</div></div>`;
             });
         }
 
@@ -501,7 +472,7 @@
         if (expertChart) expertChart.destroy();
 
         if (!data || data.length === 0) {
-            ctx.parentNode.innerHTML = "<div style='text-align:center; color:var(--text-muted); padding: 40px 0; font-size:13px;'>Aucune donnée d'historique trouvée. Assurez-vous d'avoir bien configuré vos clés Supabase et que le robot GitHub Action tourne correctement.</div>";
+            ctx.parentNode.innerHTML = "<div style='text-align:center; color:var(--text-muted); padding: 40px 0; font-size:13px;'>Aucune donnée d'historique trouvée. Attendez le prochain passage du robot (5 minutes).</div>";
             return;
         }
 
@@ -525,7 +496,7 @@
     function row(label, value) { return `<div class="tech-row"><span class="tech-label">${label}</span><span class="tech-val">${value}</span></div>`; }
     function closeDrawer() { document.getElementById('drawer').classList.remove('active'); document.getElementById('overlay').classList.remove('active'); }
     
-    // Démarrage : on charge les EFOY depuis la BDD au lieu du cache local
+    // Démarrage de l'application
     loadDevices(); 
     setInterval(refreshFleet, 60000); 
 </script>
