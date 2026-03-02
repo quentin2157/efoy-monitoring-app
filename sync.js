@@ -1,17 +1,16 @@
 const { createClient } = require('@supabase/supabase-js');
 
-// Récupération des clés secrètes depuis GitHub Actions (Secrets)
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-const efoyToken = process.env.EFOY_TOKEN;
+// === VOS CLÉS EN DUR POUR LE ROBOT ===
+const SUPABASE_URL = "https://upyglxubsynbsukrfqca.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVweWdseHVic3luYnN1a3JmcWNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0NjkyNzQsImV4cCI6MjA4ODA0NTI3NH0.EaZrLBr7v-LW2vsO3SIUeE49Z076_HR7vmEI_Si87Uc";
+const EFOY_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYTBiYmY3NC1lMWY0LTQwOWMtYThmNC0wMmE2Mjc0MmNjZDIiLCJpYXQiOjE3NzEyNDg2NTksImF1ZCI6WyJodHRwczovL2FwaS5wdWJsaWMuZWZveS1jbG91ZC5jb20vIl0sImV4cCI6MTc3NjI5MDQwMH0.p4V6ui-vcIPt9EZ0M-ds_BSUTDSkmFfIKPwV_U0T5HVm2dWWIrX9E23rFX0BApe9ea3XXY921Ub7WQwoDJ7DxQ";
 
-// Initialisation du lien avec la base de données
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function syncData() {
     console.log("🚀 Démarrage de la synchronisation...");
 
-    // 1. Lecture de la liste des appareils dans la table 'efoy_devices'
+    // 1. Lecture de la liste des EFOY depuis votre base
     const { data: deviceList, error: devErr } = await supabase.from('efoy_devices').select('serial_number');
     
     if (devErr) {
@@ -19,35 +18,32 @@ async function syncData() {
         return; 
     }
 
-    // Transformation des données Supabase en un simple tableau de numéros de série
     const devices = deviceList ? deviceList.map(d => d.serial_number) : [];
     
     if (devices.length === 0) {
-        console.log("⚠️ Aucun appareil à synchroniser dans la base de données.");
+        console.log("⚠️ Aucun appareil à synchroniser dans la base de données. Ajoutez-en un depuis l'interface web.");
         return;
     }
 
-    console.log(`📡 ${devices.length} EFOY trouvés. Début de la collecte...`);
+    console.log(`📡 ${devices.length} EFOY trouvé(s). Début de la collecte...`);
 
-    // 2. Boucle sur chaque EFOY pour récupérer les données actuelles
+    // 2. Interrogation API et Sauvegarde
     for (const sn of devices) {
         try {
-            // Appel API pour la télémesure (Puissance, Voltage, Température...)
             const response = await fetch(`https://api.public.efoy-cloud.com/v1/devices/${sn}`, {
-                headers: { 'Authorization': `Bearer ${efoyToken}` }
+                headers: { 'Authorization': `Bearer ${EFOY_TOKEN}` }
             });
 
             if (!response.ok) {
-                console.error(`❌ Erreur API EFOY pour ${sn}: Code HTTP ${response.status}`);
+                console.error(`❌ Erreur API EFOY pour ${sn}: Code ${response.status}`);
                 continue;
             }
 
             const data = await response.json();
             const telemetry = data.latestTelemetry || {};
 
-            // Appel API pour l'état des cartouches (Fuel)
             const cartResponse = await fetch(`https://api.public.efoy-cloud.com/v1/devices/${sn}/cartridges`, {
-                headers: { 'Authorization': `Bearer ${efoyToken}` }
+                headers: { 'Authorization': `Bearer ${EFOY_TOKEN}` }
             });
             
             let fuel = 0;
@@ -56,7 +52,6 @@ async function syncData() {
                 fuel = cartData.totalFuelPercent || 0;
             }
 
-            // 3. Sauvegarde d'un nouveau point d'historique dans 'efoy_history'
             const { error } = await supabase
                 .from('efoy_history')
                 .insert({
@@ -69,7 +64,7 @@ async function syncData() {
                 });
 
             if (error) {
-                console.error(`❌ Erreur de sauvegarde Supabase pour ${sn}:`, error.message);
+                console.error(`❌ Erreur Supabase (efoy_history) pour ${sn}:`, error.message);
             } else {
                 console.log(`✅ Historique sauvegardé avec succès pour ${sn}`);
             }
