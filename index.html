@@ -299,9 +299,6 @@
             }
         } catch (e) { console.error("Erreur de chargement des appareils", e); }
         
-        // Sécurité : s'il n'y a rien dans la base, on met ceux par défaut
-        if (devices.length === 0) devices = ["430511-2348-72332", "430509-2248-64759"];
-        
         refreshFleet();
     }
 
