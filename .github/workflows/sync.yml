@@ -2,8 +2,8 @@ name: EFOY Data Sync
 
 on:
   schedule:
-- cron: '* * * * *' # Lance le script toutes les minutes
-workflow_dispatch:
+    - cron: '* * * * *'
+  workflow_dispatch:
 
 jobs:
   run-sync:
